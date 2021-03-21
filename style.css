@@ -1,0 +1,93 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+.contacts{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 900px;
+    border: 2px solid black;
+    border-radius: 10px;
+    justify-items: center;
+    margin: auto;
+    background-color: wheat;
+}
+.form-add, .form-edit, .form-remove{
+    border: 2px solid black;
+    border-radius: 10px;
+    margin: 10px;
+}
+.form-add input, .form-edit input, .form-remove input{
+    display: block;
+    width: 90%;
+    padding: 5px 10px;
+    margin: 10px auto;
+    border: 1px solid black;
+    border-radius: 3px;
+    background-color: white;
+}
+.form-add button, .form-edit button, .form-remove button{
+    display: block;
+    width: 50%;
+    padding: 5px 10px;
+    margin: 10px auto;
+    border: 0px solid black;
+    border-radius: 3px;
+    background-color: white;
+    cursor: pointer;
+}
+.form-add button:hover, .form-edit button:hover, .form-remove button:hover{
+    transform: scale(1.05);
+    transition: 0.5s;
+}
+.form-add, .form-edit{
+    width: 90%;
+}
+.form-remove{
+    width: 50%;
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+h1{
+    text-align: center;
+}
+.result-contacts{
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px;
+    width: 50%;
+    height: 200px;
+    border: 2px solid black;
+    border-radius: 10px;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    background-color: white;
+    overflow: auto;
+}
+h2{
+    font-size: 18px;
+}
+@media (max-width: 1000px){
+    .contacts{
+        width: 90%;
+    }
+}
+@media (max-width: 700px){
+    h1{
+        font-size: 22px;
+    }
+    .form-add button, .form-edit button, .form-remove button{
+        width: 70%;
+    }
+}
+@media (max-width: 500px){
+    .contacts{
+        grid-template-columns: 1fr;
+    }
+    .form-remove, .result-contacts{
+        width: 90%;
+        grid-column-start: 1;
+        grid-column-end: 2;
+    }
+}
