@@ -39,14 +39,11 @@ class Contacts{
         this.clear(event);
         this.result()
     }
-    edit(event) {       // редактирлвание контакта в массив this.data
+    edit(event, id) {       // редактирлвание контакта в массив this.data
         event.preventDefault()
         for (let key of this.data) {
             if (+key.id === +event.currentTarget[0].value) { // поиск ID уже созданного контакта и изменяемого
-                let arr = []
-                for (let key1 in key) { // массив свойст объекта
-                    arr.push(key1)
-                }
+                let arr = Object.keys(key)
                 for (let i=1; i < event.currentTarget.length-1; i++) { // изменение данных объекта
                     if (event.currentTarget[i].value !== '') {
                         key[arr[i]] = event.currentTarget[i].value
@@ -55,22 +52,24 @@ class Contacts{
             }
         }
 
-        // let name = event.currentTarget[1].value
+        // const user = this.data.find(item => item.id === id) // альтернативный способ (не работает)
+        // const indexToField = {
+        //     '0': 'name',
+        //     '1': 'email',
+        //     '2': 'address',
+        //     '3': 'phone'
+        // } 
+        // Object.keys(event.currentTarget).map(function(key, index) {
+        //     if (event.currentTarget[+key].value !== '') {
+        //         user[indexToField[key]] = event.currentTarget[+key].value
+        //     }
+        // })
+
+        // let name = event.currentTarget[1].value      // альтернативный способ (замена всех значений)
         // let email = event.currentTarget[2].value
         // let address = event.currentTarget[3].value
         // let phone = event.currentTarget[4].value
         // let contact = this.data.find(item => item.id === event.currentTarget[0].value) 
-        // if (event.currentTarget.map(item => item.value !== '')){
-        //     console.log(item);
-        // }
-        // for (let key in contact) {
-        //     console.log(contact[key]);
-        //     if (contact[key] !== '') {
-        //         // contact[key] = 
-        //         console.log(contact[key]);
-        //     }
-        // }
-
         // contact.name = name
         // contact.email = email
         // contact.address = address
@@ -158,8 +157,13 @@ class ContactsApp extends Contacts{
     get(){
         super.get()
     }
-}
+    get storage() {
+        
+    }
+    set storage() {
 
+    }
+}
 
 const list = new ContactsApp()
 list.app()
