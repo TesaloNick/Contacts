@@ -19,7 +19,7 @@ class Users {
         return this.data
     }
 }
-// let date = ''
+
 class Contacts{
     constructor() {
         this.data = []
@@ -27,8 +27,6 @@ class Contacts{
         this.add = this.add.bind(this)
         this.edit = this.edit.bind(this)
         this.remove = this.remove.bind(this)
-        this.localStorage = {key: '', value: ''}
-        // this.localStorage = []
     }
     add(event){     // добаление контакта
         event.preventDefault()
@@ -39,7 +37,7 @@ class Contacts{
             this.data.push(newUser.data)        // добавление контакта в массив this.data
         } 
         
-        this.clear(event);
+        this.clearInput(event);
         this.result()
         this.changeLocalStorage()
     }
@@ -56,19 +54,6 @@ class Contacts{
             }
         }
 
-        // const user = this.data.find(item => item.id === id) // альтернативный способ (не работает)
-        // const indexToField = {
-        //     '0': 'name',
-        //     '1': 'email',
-        //     '2': 'address',
-        //     '3': 'phone'
-        // } 
-        // Object.keys(event.currentTarget).map(function(key, index) {
-        //     if (event.currentTarget[+key].value !== '') {
-        //         user[indexToField[key]] = event.currentTarget[+key].value
-        //     }
-        // })
-
         // let name = event.currentTarget[1].value      // альтернативный способ (замена всех значений)
         // let email = event.currentTarget[2].value
         // let address = event.currentTarget[3].value
@@ -79,16 +64,16 @@ class Contacts{
         // contact.address = address
         // contact.phone = phone  
         this.changeLocalStorage()
-    
-        this.clear(event)
+        this.clearInput(event)
         this.result()
     }
 
     remove(event) {        // удаление контакта в массив this.data
         event.preventDefault()
         this.data = this.data.filter(item => item.id !== event.currentTarget[0].value)
+
         this.changeLocalStorage()
-        this.clear(event)
+        this.clearInput(event)
         this.result()
     }
     result(){       // вывод результата в контейнер
@@ -109,8 +94,8 @@ class Contacts{
         console.log(this.data);
     }
     changeLocalStorage() {
-        this.date = new Date(Date.now() + 10000)
         localStorage.clear()
+        this.date = new Date(Date.now() + 10000) // 10 секунд для проверки
         this.date = this.date.toUTCString()
         document.cookie = `storageExpiration = 10 days;  expires=` + this.date
         this.data.forEach(item => {
@@ -124,7 +109,7 @@ class Contacts{
             localStorage.clear()
         }
     }
-    clear(event){
+    clearInput(event){
         for (let i=0; i < event.currentTarget.length; i++) {
             event.currentTarget[i].value = ''
         }
@@ -132,7 +117,6 @@ class Contacts{
     get() {
         return this.data
     }
-
 }
 
 class ContactsApp extends Contacts{
