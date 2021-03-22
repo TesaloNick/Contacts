@@ -26,6 +26,8 @@ class Contacts{
         this.add = this.add.bind(this)
         this.edit = this.edit.bind(this)
         this.remove = this.remove.bind(this)
+        this.localStorage = {key: '', value: ''}
+        // this.localStorage = []
     }
     add(event){     // добаление контакта
         event.preventDefault()
@@ -158,10 +160,10 @@ class ContactsApp extends Contacts{
         super.get()
     }
     get storage() {
-        
+        return console.log(localStorage.getItem('111'));
     }
-    set storage() {
-
+    set storage(value) {
+        localStorage.setItem(this.localStorage.key, this.localStorage.value)
     }
 }
 
@@ -170,3 +172,6 @@ list.app()
 list.onAdd()
 list.onEdit()
 list.onRemove()
+list.localStorage = {key: '111', value: '222'}
+list.storage('1')
+
