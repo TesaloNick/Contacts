@@ -22,7 +22,7 @@ class Users {
 
 class Contacts{
     constructor() {
-        this.data = []
+        this.data = localStorage.getItem('contacts') ? JSON.parse(localStorage.getItem('contacts')) : [] //  проверка на наличие localStorage
         this.date = ''
         this.add = this.add.bind(this)
         this.edit = this.edit.bind(this)
@@ -38,8 +38,8 @@ class Contacts{
         } 
         
         this.clearInput(event);
-        this.result()
         this.changeLocalStorage()
+        this.result()
     }
     edit(event, id) {       // редактирлвание контакта в массив this.data
         event.preventDefault()
@@ -63,8 +63,8 @@ class Contacts{
         // contact.email = email
         // contact.address = address
         // contact.phone = phone  
-        this.changeLocalStorage()
         this.clearInput(event)
+        this.changeLocalStorage()
         this.result()
     }
 
@@ -72,14 +72,14 @@ class Contacts{
         event.preventDefault()
         this.data = this.data.filter(item => item.id !== event.currentTarget[0].value)
 
-        this.changeLocalStorage()
         this.clearInput(event)
+        this.changeLocalStorage()
         this.result()
     }
     result(){       // вывод результата в контейнер
         document.querySelector('.result-contacts').innerHTML = ''
         let counter = 1;
-        this.data.forEach(item => {
+        JSON.parse(localStorage.getItem('contacts')).forEach(item => { // достаем из localStorage данные и парсим строку
             document.querySelector('.result-contacts').insertAdjacentHTML('beforeend', `
                 <h2>Контакт №${counter}</h2>
                 <p>id: ${item.id}</p>
@@ -93,23 +93,23 @@ class Contacts{
         })
         console.log(this.data);
     }
-    changeLocalStorage() {
-        localStorage.clear()
-        this.date = new Date(Date.now() + 10000) // 10 секунд для проверки
+    changeLocalStorage() { // меняет куки и localStorage
+        this.date = new Date(Date.now() + 1000000) // 1дней для проверки
         this.date = this.date.toUTCString()
         document.cookie = `storageExpiration = 10 days;  expires=` + this.date
         this.data.forEach(item => {
             // localStorage.removeItem(item.id)
-            localStorage.setItem(item.id, JSON.stringify(item))
+            // localStorage.setItem(item.id, JSON.stringify(item))
             document.cookie = `id: ${item.id} = ${JSON.stringify(item)}; expires=` + this.date
         })
+        localStorage.setItem('contacts', JSON.stringify(this.data))
     }
     clearLocalStorage(){
-        if (this.date < Date.now()){
-            localStorage.clear()
-        }
+        // if (this.date < Date.now()){
+        //     localStorage.clear()
+        // }
     }
-    clearInput(event){
+    clearInput(event){ // очищает поля input после ввода
         for (let i=0; i < event.currentTarget.length; i++) {
             event.currentTarget[i].value = ''
         }
@@ -150,6 +150,7 @@ class ContactsApp extends Contacts{
         </form>
         <div class="result-contacts"></div>
         `
+        if (localStorage.getItem('contacts')) this.result() // проверка на наличие в localStorage 
     }
     onAdd(){        // добавление данных из DOM в массив
         document.querySelector('.form-add').addEventListener('submit', this.add)
