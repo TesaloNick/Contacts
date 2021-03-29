@@ -81,13 +81,14 @@ class Contacts{
         let counter = 1;
         JSON.parse(localStorage.getItem('contacts')).forEach(item => { // достаем из localStorage данные и парсим строку
             document.querySelector('.result-contacts').insertAdjacentHTML('beforeend', `
-                <h2>Контакт №${counter}</h2>
-                <p>id: ${item.id}</p>
-                <p>name: ${item.name}</p>
-                <p>email: ${item.email}</p>
-                <p>address: ${item.address}</p>
-                <p>phone: ${item.phone}</p>
-                <p>---------------------</p>
+                <div>
+                    <h2>Контакт №${counter}</h2>
+                    <p>id: ${item.id}</p>
+                    <p>name: ${item.name}</p>
+                    <p>email: ${item.email}</p>
+                    <p>address: ${item.address}</p>
+                    <p>phone: ${item.phone}</p>
+                </div>
             `)
             counter++
         })

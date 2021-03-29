@@ -37,6 +37,9 @@
     background-color: white;
     cursor: pointer;
 }
+.form-remove button{
+    width: 30%;
+}
 .form-add button:hover, .form-edit button:hover, .form-remove button:hover{
     transform: scale(1.05);
     transition: 0.5s;
@@ -45,7 +48,7 @@
     width: 90%;
 }
 .form-remove{
-    width: 50%;
+    width: 95%;
     grid-column-start: 1;
     grid-column-end: 3;
 }
@@ -53,24 +56,35 @@ h1{
     text-align: center;
 }
 .result-contacts{
-    display: inline-block;
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: 1fr 1fr 1fr;
     padding: 10px 20px;
     margin: 10px;
-    width: 50%;
-    height: 200px;
-    border: 2px solid black;
+    width: 95%;
     border-radius: 10px;
     grid-column-start: 1;
     grid-column-end: 3;
     background-color: white;
-    overflow: auto;
+}
+.result-contacts div{
+    border-radius: 10px;
+    background-color: lightgoldenrodyellow;
+    padding: 10px;
+}
+.result-contacts p{
+    display: block;
 }
 h2{
     font-size: 18px;
+    text-align: center;
 }
 @media (max-width: 1000px){
     .contacts{
         width: 90%;
+    }
+    .result-contacts{
+        grid-template-columns: 1fr 1fr;
     }
 }
 @media (max-width: 700px){
@@ -79,6 +93,9 @@ h2{
     }
     .form-add button, .form-edit button, .form-remove button{
         width: 70%;
+    }
+    .result-contacts{
+        grid-template-columns: 1fr;
     }
 }
 @media (max-width: 500px){
