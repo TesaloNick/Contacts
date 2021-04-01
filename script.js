@@ -30,8 +30,8 @@ class Contacts{
     }
     add(event){     // добаление контакта
         event.preventDefault()
-        let newUser = new Users(event.currentTarget[0].value, event.currentTarget[1].value, event.currentTarget[2].value,  event.currentTarget[3].value, event.currentTarget[4].value) // создание объекта с новым контактом
-        if (this.data.find(item => item.id === event.currentTarget[0].value)) { // проверка на повторение id при добавлении контакта
+        let newUser = new Users(+event.currentTarget[0].value, event.currentTarget[1].value, event.currentTarget[2].value,  event.currentTarget[3].value, event.currentTarget[4].value) // создание объекта с новым контактом
+        if (this.data.find(item => item.id === +event.currentTarget[0].value)) { // проверка на повторение id при добавлении контакта
             alert('Контакт с таким ID уже существует')
         } else {
             this.data.push(newUser.data)        // добавление контакта в массив this.data
@@ -70,7 +70,7 @@ class Contacts{
 
     remove(event) {        // удаление контакта в массив this.data
         event.preventDefault()
-        this.data = this.data.filter(item => item.id !== event.currentTarget[0].value)
+        this.data = this.data.filter(item => item.id !== +event.currentTarget[0].value)
 
         this.clearInput(event)
         this.changeLocalStorage()
@@ -151,7 +151,15 @@ class ContactsApp extends Contacts{
         </form>
         <div class="result-contacts"></div>
         `
-        if (localStorage.getItem('contacts')) this.result() // проверка на наличие в localStorage 
+        if (localStorage.getItem('contacts')) {
+            this.result() // проверка на наличие в localStorage
+        } else {
+            // Promise.all([this.getData()]).then(() => this.result())
+            let promise = new Promise(
+                this.getData()
+            )
+            promise.then(() => this.result())
+        } 
     }
     onAdd(){        // добавление данных из DOM в массив
         document.querySelector('.form-add').addEventListener('submit', this.add)
@@ -166,12 +174,15 @@ class ContactsApp extends Contacts{
         async function a() {
             let promise = await fetch('https://jsonplaceholder.typicode.com/users')
             .then(response => response.json())
-            .then(json => console.log(json))
+            .then(json => localStorage.setItem('contacts', JSON.stringify(json)))
+
             // альтернаятивный способ
             // let json = await promise.json();
-            // console.log(json);
+            // console.log(json.length);
+            // console.log(this.data);
         }
         a()
+        console.log(this.data);
     }
     get(){
         super.get()
@@ -190,4 +201,3 @@ list.onAdd()
 list.onEdit()
 list.onRemove()
 list.clearLocalStorage()
-list.getData()
