@@ -79,18 +79,25 @@ class Contacts{
     result(){       // вывод результата в контейнер
         document.querySelector('.result-contacts').innerHTML = ''
         let counter = 1;
+        let adress;
         JSON.parse(localStorage.getItem('contacts')).forEach(item => { // достаем из localStorage данные и парсим строку
+            if (item.address.city){
+                adress = item.address.city
+            } else {
+                adress = item.address
+            }
             document.querySelector('.result-contacts').insertAdjacentHTML('beforeend', `
-                <div>
-                    <h2>Контакт №${counter}</h2>
-                    <p>id: ${item.id}</p>
-                    <p>name: ${item.name}</p>
-                    <p>email: ${item.email}</p>
-                    <p>address: ${item.address}</p>
-                    <p>phone: ${item.phone}</p>
-                </div>
+            <div>
+                <h2>Контакт №${counter}</h2>
+                <p>id: ${item.id}</p>
+                <p>name: ${item.name}</p>
+                <p>email: ${item.email}</p>
+                <p>address: ${adress}</p>
+                <p>phone: ${item.phone}</p>
+            </div>
             `)
             counter++
+
         })
         console.log(this.data);
     }
