@@ -155,10 +155,10 @@ class ContactsApp extends Contacts{
             this.result() // проверка на наличие в localStorage
         } else {
             // Promise.all([this.getData()]).then(() => this.result())
-            let promise = new Promise(
+            // let promise = new Promise(
                 this.getData()
-            )
-            promise.then(() => this.result())
+            // )
+            // promise.then(() => this.result())
         } 
     }
     onAdd(){        // добавление данных из DOM в массив
@@ -171,12 +171,16 @@ class ContactsApp extends Contacts{
         document.querySelector('.form-remove').addEventListener('submit', this.remove)
     }
     getData(){
+        self = this
         async function a() {
             let promise = await fetch('https://jsonplaceholder.typicode.com/users')
             .then(response => response.json())
-            .then(json => localStorage.setItem('contacts', JSON.stringify(json)))
+            .then(json => {
+                localStorage.setItem('contacts', JSON.stringify(json))
+                self.result()
+            })
 
-            // альтернаятивный способ
+            // альтернативный способ
             // let json = await promise.json();
             // console.log(json.length);
             // console.log(this.data);
