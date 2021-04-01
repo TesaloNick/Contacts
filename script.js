@@ -162,6 +162,17 @@ class ContactsApp extends Contacts{
     onRemove(){        // удаление данных из DOM в массив
         document.querySelector('.form-remove').addEventListener('submit', this.remove)
     }
+    getData(){
+        async function a() {
+            let promise = await fetch('https://jsonplaceholder.typicode.com/users')
+            .then(response => response.json())
+            .then(json => console.log(json))
+            // альтернаятивный способ
+            // let json = await promise.json();
+            // console.log(json);
+        }
+        a()
+    }
     get(){
         super.get()
     }
@@ -179,3 +190,4 @@ list.onAdd()
 list.onEdit()
 list.onRemove()
 list.clearLocalStorage()
+list.getData()
