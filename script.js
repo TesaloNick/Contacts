@@ -179,12 +179,13 @@ class ContactsApp extends Contacts{
     }
     getData(){
         self = this
-        async function a() {
+        async function addUsers() {
             let promise = await fetch('https://jsonplaceholder.typicode.com/users')
             .then(response => response.json())
             .then(json => {
                 localStorage.setItem('contacts', JSON.stringify(json))
                 self.result()
+                self.data = JSON.parse(localStorage.getItem('contacts'))
             })
 
             // альтернативный способ
@@ -192,8 +193,7 @@ class ContactsApp extends Contacts{
             // console.log(json.length);
             // console.log(this.data);
         }
-        a()
-        console.log(this.data);
+        addUsers()
     }
     get(){
         super.get()
